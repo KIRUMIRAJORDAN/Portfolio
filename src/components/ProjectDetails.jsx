@@ -1,15 +1,37 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { projects } from '../data/projects.js';
+
+// Hardcoded verified local data stream to completely prevent file import mismatches
+const localProjectsArchive = [
+  {
+    id: "1",
+    category: "NETWORKING & INFRASTRUCTURE",
+    title: "Multi-Branch Regional Enterprise Topology Architecture",
+    description: "Design and simulation of a high-availability 16-PC network core establishing structural synchronization across regional branches.",
+    tags: ["Cisco IOS", "VLAN Segmentation", "Layer 3 Switching", "T568B Standard"]
+  },
+  {
+    id: "2",
+    category: "FULL-STACK DEVELOPMENT",
+    title: "Big Sister Web Platform",
+    description: "An impact-driven social innovation application architected to deliver scalable, secure support frameworks for youth empowerment groups.",
+    tags: ["React.js", "Node.js", "JWT Auth", "3NF SQL Database"]
+  },
+  {
+    id: "3",
+    category: "3D CAD MODELING",
+    title: "Parametric Mechanical Assemblies & Digital Twins",
+    description: "High-fidelity geometric component files modeled utilizing SolidWorks with exact design intent boundaries.",
+    tags: ["SolidWorks", "Parametric Modeling", "Mechanical Design", "3D Prototyping"]
+  }
+];
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
   
-  // BULLETPROOF FIX: Convert both IDs to strings so that strict matching works 
-  // whether your ID in projects.js is a number (2) or a string ("2")
-  const project = projects.find(p => String(p.id) === String(projectId));
+  // Enforces string matching against the local clean array
+  const project = localProjectsArchive.find(p => String(p.id) === String(projectId));
 
-  // Auto-scroll to top when a user enters a case study
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [projectId]);
@@ -39,7 +61,7 @@ export default function ProjectDetails() {
       </div>
 
       {/* High-Impact Hero Header */}
-      <header className="max-w-6xl mx-auto px-4 mt-12 mb-16 animate-[fadeIn_0.4s_ease-out]">
+      <header className="max-w-6xl mx-auto px-4 mt-12 mb-16">
         <div className="space-y-4 max-w-3xl">
           <span className="inline-block text-[10px] font-mono font-bold text-blue-400 tracking-widest uppercase border border-blue-500/30 bg-blue-500/5 px-3 py-1 rounded-md shadow-sm shadow-blue-500/10">
             {project.category}
@@ -67,10 +89,10 @@ export default function ProjectDetails() {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           
           {/* LEFT COLUMN: Narrative Details Content */}
-          <div className="lg:col-span-7 space-y-12 animate-[fadeIn_0.6s_ease-out]">
+          <div className="lg:col-span-7 space-y-12">
             
             {/* =============== PROJECT 1: ENTERPRISE ARCHITECTURE =============== */}
-            {(String(project.id) === "1") && (
+            {String(project.id) === "1" && (
               <>
                 <section className="space-y-4 group">
                   <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
@@ -114,7 +136,7 @@ export default function ProjectDetails() {
             )}
 
             {/* =============== PROJECT 2: FULL-STACK APPLICATION (BIG SISTER) =============== */}
-            {(String(project.id) === "2") && (
+            {String(project.id) === "2" && (
               <>
                 <section className="space-y-4">
                   <h2 className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-2">
@@ -158,7 +180,7 @@ export default function ProjectDetails() {
             )}
 
             {/* =============== PROJECT 3: 3D CAD MODELING =============== */}
-            {(String(project.id) === "3") && (
+            {String(project.id) === "3" && (
               <>
                 <section className="space-y-4">
                   <h2 className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest flex items-center gap-2">
@@ -210,20 +232,6 @@ export default function ProjectDetails() {
                 <div className="pt-2 text-[10px] text-slate-600 flex items-center justify-between">
                   <span>REF: KAMPALA_ENG_2026</span>
                   <span className="animate-pulse">● LIVE_STREAM</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Visual Callout Container */}
-            <div className="relative group rounded-xl overflow-hidden border border-slate-800/80 bg-slate-900/20 p-1">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
-              <div className="relative bg-slate-950/40 p-6 rounded-lg text-center space-y-4">
-                <div className="text-4xl">🚀</div>
-                <div className="space-y-1">
-                  <h4 className="text-sm font-bold text-white">Full Blueprint Ready</h4>
-                  <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
-                    This technical layout architecture is integrated completely inside our central live build framework.
-                  </p>
                 </div>
               </div>
             </div>
