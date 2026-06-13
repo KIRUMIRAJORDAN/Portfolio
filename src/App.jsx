@@ -212,7 +212,7 @@ function MainConsole() {
           </p>
           <div className="pt-4">
             <a 
-              href="https://wa.me/256700000000" // Swap out with your accurate contact digit values
+              href="https://wa.me/256780618609" // Swap out with your accurate contact digit values
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-white text-slate-950 hover:bg-slate-100 active:bg-slate-200 font-mono font-bold text-xs tracking-wider px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-white/5 hover:scale-[1.02]"
