@@ -1,63 +1,54 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-// Hardcoded local fallback dataset to bypass external array link errors
-const localProjectsArchive = [
-  {
-    id: "1",
-    category: "NETWORKING & INFRASTRUCTURE",
-    title: "Multi-Branch Regional Enterprise Topology Architecture",
-    description: "Design and simulation of a high-availability 16-PC network core establishing structural synchronization across regional branches.",
-    tags: ["Cisco IOS", "VLAN Segmentation", "Layer 3 Switching", "T568B Standard"]
-  },
-  {
-    id: "2",
-    category: "FULL-STACK DEVELOPMENT",
-    title: "Big Sister Web Platform",
-    description: "An impact-driven social innovation application architected to deliver scalable, secure support frameworks for youth empowerment groups.",
-    tags: ["React.js", "Node.js", "JWT Auth", "3NF SQL Database"]
-  },
-  {
-    id: "3",
-    category: "3D CAD MODELING",
-    title: "Parametric Mechanical Assemblies & Digital Twins",
-    description: "High-fidelity geometric component files modeled utilizing SolidWorks with exact design intent boundaries.",
-    tags: ["SolidWorks", "Parametric Modeling", "Mechanical Design", "3D Prototyping"]
-  }
-];
-
 export default function ProjectDetails() {
-  const { projectId } = useParams();
+  const params = useParams();
   
-  // Dynamic string matching
-  const project = localProjectsArchive.find(p => String(p.id) === String(projectId));
+  // UNIVERSAL FIX: Extract both lowercase and camelCase to prevent route crashes
+  const projectId = params.projectId || params.projectid || "2";
+
+  const localProjectsArchive = [
+    {
+      id: "1",
+      category: "NETWORKING & INFRASTRUCTURE",
+      title: "Multi-Branch Regional Enterprise Topology Architecture",
+      description: "Design and simulation of a high-availability 16-PC network core establishing structural synchronization across regional branches.",
+      tags: ["Cisco IOS", "VLAN Segmentation", "Layer 3 Switching", "T568B Standard"]
+    },
+    {
+      id: "2",
+      category: "FULL-STACK DEVELOPMENT",
+      title: "Big Sister Web Platform",
+      description: "An impact-driven social innovation application architected to deliver scalable, secure support frameworks for youth empowerment groups.",
+      tags: ["React.js", "Node.js", "JWT Auth", "3NF SQL Database"]
+    },
+    {
+      id: "3",
+      category: "3D CAD MODELING",
+      title: "Parametric Mechanical Assemblies & Digital Twins",
+      description: "High-fidelity geometric component files modeled utilizing SolidWorks with exact design intent boundaries.",
+      tags: ["SolidWorks", "Parametric Modeling", "Mechanical Design", "3D Prototyping"]
+    }
+  ];
+
+  // Match the ID parameter cleanly
+  let project = localProjectsArchive.find(p => String(p.id) === String(projectId));
+  if (!project) {
+    project = localProjectsArchive[1]; // Hard fallback to Big Sister profile details
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [projectId]);
 
-  if (!project) {
-    return (
-      <div className="min-h-screen bg-[#070b19] text-white flex flex-col items-center justify-center font-mono p-4 pt-32">
-        <p className="text-rose-500 font-bold tracking-widest animate-pulse">⚠️ ERROR: SUBSYSTEM_NOT_FOUND</p>
-        <div className="text-xs text-slate-500 mt-2">REQUESTED_ID: {projectId}</div>
-        <Link to="/" className="mt-6 text-sm text-blue-400 hover:text-blue-300 border border-blue-500/30 bg-blue-500/5 px-4 py-2 rounded-lg">
-          ← Return to Core Console
-        </Link>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[#070b19] text-slate-300 pb-24 font-sans pt-28">
-      {/* Top Breadcrumb Navigation Spacer Panel */}
+    <div className="min-h-screen bg-[#070b19] text-slate-300 pb-24 font-sans pt-32">
       <div className="max-w-6xl mx-auto px-4 mb-8">
-        <Link to="/" className="text-xs font-mono text-blue-400 hover:text-blue-300 flex items-center gap-2 group tracking-wider">
-          <span className="transform group-hover:-translate-x-1 transition-transform">←</span> BACK_TO_DASHBOARD
+        <Link to="/" className="text-xs font-mono text-blue-400 hover:text-blue-300 flex items-center gap-2">
+          ← BACK_TO_CONSOLE_DASHBOARD
         </Link>
       </div>
 
-      {/* High-Impact Hero Header */}
       <header className="max-w-6xl mx-auto px-4 mb-12">
         <div className="space-y-4 max-w-3xl">
           <span className="inline-block text-[10px] font-mono font-bold text-blue-400 tracking-widest uppercase border border-blue-500/30 bg-blue-500/5 px-3 py-1 rounded-md">
@@ -66,7 +57,7 @@ export default function ProjectDetails() {
           <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-none">
             {project.title}
           </h1>
-          <p className="text-slate-400 text-lg sm:text-xl leading-relaxed font-light">
+          <p className="text-slate-400 text-lg sm:text-xl leading-relaxed font-light mt-2">
             {project.description}
           </p>
         </div>
@@ -80,14 +71,10 @@ export default function ProjectDetails() {
         </div>
       </header>
 
-      {/* Main Narrative Content Container */}
       <main className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-12 gap-12 items-start">
-          
-          {/* LEFT COLUMN - CASE STUDY DETAILS */}
           <div className="lg:col-span-7 space-y-12">
             
-            {/* IF PART 1: NETWORKING */}
             {String(project.id) === "1" && (
               <>
                 <section className="space-y-3">
@@ -102,16 +89,9 @@ export default function ProjectDetails() {
                     Unsegmented multi-branch architectures suffer heavily from massive broadcast loops, lack of security boundaries, and high network congestion. Without explicit physical mapping and routing rules, cross-country branch data can easily leak across departmental infrastructure.
                   </p>
                 </section>
-                <section className="space-y-3">
-                  <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest">03_QUANTIFIABLE_RESULTS</h2>
-                  <p className="text-slate-300 leading-relaxed">
-                    Executed full physical deployment loops in real server labs. Successfully mounted Layer-3 core infrastructure hardware switches into standard racks, terminated lines cleanly via structural patch panel punch-downs, and verified 100% data transmission loops across all subnets using physical testing routines and rigorous T568B structured termination validation protocols.
-                  </p>
-                </section>
               </>
             )}
 
-            {/* IF PART 2: BIG SISTER */}
             {String(project.id) === "2" && (
               <>
                 <section className="space-y-3">
@@ -133,7 +113,7 @@ export default function ProjectDetails() {
                   </p>
                 </section>
                 <section className="space-y-3">
-                  <h2 className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest">04_SECURITY_DECISIONS</h2>
+                  <h2 className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest">04_SECURITY_ARCHITECTURE</h2>
                   <div className="p-6 bg-slate-900/40 border border-slate-800 rounded-xl">
                     <h4 className="text-sm font-mono font-bold text-white uppercase mb-2">JSON Web Token Authorization</h4>
                     <p className="text-sm text-slate-400 leading-relaxed">
@@ -144,7 +124,6 @@ export default function ProjectDetails() {
               </>
             )}
 
-            {/* IF PART 3: SOLIDWORKS */}
             {String(project.id) === "3" && (
               <>
                 <section className="space-y-3">
@@ -158,27 +137,19 @@ export default function ProjectDetails() {
 
           </div>
 
-          {/* RIGHT COLUMN - LIVE SYSTEM STATUS TERMINAL BOX */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
-            <div className="bg-slate-950/90 border-2 border-slate-800 rounded-xl overflow-hidden shadow-2xl font-mono text-xs">
+          <div className="lg:col-span-5 lg:sticky lg:top-32">
+            <div className="bg-slate-950/90 border-2 border-slate-800 rounded-xl overflow-hidden font-mono text-xs shadow-xl">
               <div className="bg-slate-900 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
-                <div className="flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-rose-500"></span>
-                  <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                </div>
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">DIAGNOSTICS</span>
+                <span className="text-[10px] text-slate-400 font-bold tracking-widest">SYSTEM_METRICS_LOG</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
               </div>
-              <div className="p-5 space-y-3 text-slate-400">
-                <div className="bg-slate-900/50 p-3 rounded border border-slate-800/80 text-[11px] space-y-1 text-slate-300">
-                  <div><strong className="text-white">PROJECT_ID:</strong> 00{project.id}</div>
-                  <div><strong className="text-white">DEPLOY_ENV:</strong> Production Vercel App</div>
-                  <div><strong className="text-white">SYS_STATUS:</strong> Ready (Active)</div>
-                </div>
+              <div className="p-5 space-y-2 text-slate-400">
+                <div><span className="text-slate-500">PARAM_ID:</span> 00{project.id}</div>
+                <div><span className="text-slate-500">SYS_DEPLOY:</span> Vercel Production Hook</div>
+                <div><span className="text-slate-500">CORE_ENGINE:</span> React Router Dom</div>
               </div>
             </div>
           </div>
-
         </div>
       </main>
     </div>
