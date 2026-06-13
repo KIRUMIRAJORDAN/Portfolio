@@ -4,9 +4,12 @@ import { projects } from '../data/projects.js';
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
-  const project = projects.find(p => p.id === parseInt(projectId));
+  
+  // BULLETPROOF FIX: Convert both IDs to strings so that strict matching works 
+  // whether your ID in projects.js is a number (2) or a string ("2")
+  const project = projects.find(p => String(p.id) === String(projectId));
 
-  // Auto-scroll to top when loading a case study
+  // Auto-scroll to top when a user enters a case study
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [projectId]);
@@ -15,6 +18,7 @@ export default function ProjectDetails() {
     return (
       <div className="min-h-screen bg-[#070b19] text-white flex flex-col items-center justify-center font-mono p-4">
         <p className="text-rose-500 font-bold tracking-widest animate-pulse">⚠️ ERROR: SUBSYSTEM_NOT_FOUND</p>
+        <div className="text-xs text-slate-500 mt-2">REQUESTED_ID: {projectId}</div>
         <Link to="/" className="mt-6 text-sm text-blue-400 hover:text-blue-300 transition-colors border border-blue-500/30 bg-blue-500/5 px-4 py-2 rounded-lg">
           ← Return to Core Console
         </Link>
@@ -66,7 +70,7 @@ export default function ProjectDetails() {
           <div className="lg:col-span-7 space-y-12 animate-[fadeIn_0.6s_ease-out]">
             
             {/* =============== PROJECT 1: ENTERPRISE ARCHITECTURE =============== */}
-            {project.id === 1 && (
+            {(String(project.id) === "1") && (
               <>
                 <section className="space-y-4 group">
                   <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
@@ -109,11 +113,11 @@ export default function ProjectDetails() {
               </>
             )}
 
-            {/* =============== PROJECT 2: FULL-STACK APPLICATION =============== */}
-            {project.id === 2 && (
+            {/* =============== PROJECT 2: FULL-STACK APPLICATION (BIG SISTER) =============== */}
+            {(String(project.id) === "2") && (
               <>
                 <section className="space-y-4">
-                  <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                  <h2 className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block animate-pulse"></span> 01_CONTEXT_&_BACKGROUND
                   </h2>
                   <p className="text-slate-300 leading-relaxed text-base">
@@ -122,7 +126,7 @@ export default function ProjectDetails() {
                 </section>
 
                 <section className="space-y-4">
-                  <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                  <h2 className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block"></span> 02_PROBLEM_STATEMENT
                   </h2>
                   <p className="text-slate-300 leading-relaxed text-base">
@@ -131,7 +135,7 @@ export default function ProjectDetails() {
                 </section>
 
                 <section className="space-y-4">
-                  <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                  <h2 className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block"></span> 03_RESEARCH_&_DATA_NORMALIZATION
                   </h2>
                   <p className="text-slate-300 leading-relaxed text-base">
@@ -140,7 +144,7 @@ export default function ProjectDetails() {
                 </section>
 
                 <section className="space-y-4">
-                  <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                  <h2 className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block"></span> 04_SECURITY_DECISIONS
                   </h2>
                   <div className="p-6 bg-slate-900/30 border border-slate-800/80 rounded-xl space-y-3 backdrop-blur-sm">
@@ -154,10 +158,10 @@ export default function ProjectDetails() {
             )}
 
             {/* =============== PROJECT 3: 3D CAD MODELING =============== */}
-            {project.id === 3 && (
+            {(String(project.id) === "3") && (
               <>
                 <section className="space-y-4">
-                  <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                  <h2 className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-purple-500 inline-block animate-pulse"></span> 01_CONTEXT_&_DESIGN_INTENT
                   </h2>
                   <p className="text-slate-300 leading-relaxed text-base">
@@ -166,7 +170,7 @@ export default function ProjectDetails() {
                 </section>
 
                 <section className="space-y-4">
-                  <h2 className="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                  <h2 className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-purple-500 inline-block"></span> 02_PARAMETRIC_LOGIC
                   </h2>
                   <p className="text-slate-300 leading-relaxed text-base">
